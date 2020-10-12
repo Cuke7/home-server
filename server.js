@@ -12,6 +12,7 @@ const firebase = require('firebase');
 const webpush = require('web-push');
 const rp = require('request-promise');
 const cheerio = require('cheerio');
+const request = require('request');
 
 // Set the server port
 app.set("port", process.env.PORT || 5000);
@@ -523,7 +524,7 @@ app.get("/get_station_time_for_P8_geoloc", function (req, res) {
                     );
                     for (const tram of trams) {
                         let temp = tram.innerText;
-                        temp = temp.substring(0, temp.length - 1);
+                        //temp = temp.substring(0, temp.length - 1);
                         times.push(temp);
                     }
                     return times;
