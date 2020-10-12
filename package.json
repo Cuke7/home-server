@@ -1,0 +1,19 @@
+{
+  "name": "home-server",
+  "version": "1.0.0",
+  "description": "Home server with utilities API",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cuke7/home-server.git"
+  },
+  "author": "Cuke",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cuke7/home-server/issues"
+  },
+  "homepage": "https://github.com/Cuke7/home-server#readme"
+}
