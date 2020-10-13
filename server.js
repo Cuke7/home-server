@@ -14,9 +14,7 @@ const rp = require("request-promise");
 const cheerio = require("cheerio");
 const request = require("request");
 const fs = require("fs");
-
-// Set the server port
-app.set("port", 80);
+const https = require("https");
 
 // No idea what it does
 app.use(
@@ -29,9 +27,17 @@ app.use(bodyParser.json());
 // Handle requests for static files
 app.use(express.static("public"));
 
-app.listen(app.get("port"), function () {
-  console.log("running on port", app.get("port"));
-});
+https
+  .createServer(
+    {
+      key: fs.readFileSync("key.pem"),
+      cert: fs.readFileSync("cert.pem"),
+    },
+    app
+  )
+  .listen(443);
+
+console.log("Hello secure world!");
 
 //------------------------------------------------------------------------------------------
 //-------------------------------------QUOTIDIE CODE----------------------------------------
@@ -638,6 +644,9 @@ function distance(lat1, lon1, lat2, lon2, unit) {
 //-------------------------------------DASHBOARD CODE---------------------------------------
 //------------------------------------------------------------------------------------------
 app.get("/get_rasp_temp/", function (req, res) {
-  temp = fs.readFileSync("/home/pi/Documents/scripts/temperature/measures/temperature.txt", "utf8");
+  temp = fs.readFileSync(
+    "/home/pi/Documents/scripts/temperature/measures/temperature.txt",
+    "utf8"
+  );
   res.json(temp);
 });
