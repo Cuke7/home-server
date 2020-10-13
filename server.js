@@ -16,7 +16,7 @@ const request = require("request");
 const fs = require("fs");
 
 // Set the server port
-app.set("port", process.env.PORT || 5000);
+app.set("port", 80);
 
 // No idea what it does
 app.use(
@@ -638,6 +638,6 @@ function distance(lat1, lon1, lat2, lon2, unit) {
 //-------------------------------------DASHBOARD CODE---------------------------------------
 //------------------------------------------------------------------------------------------
 app.get("/get_rasp_temp/", function (req, res) {
-  temp = fs.readFileSync("./temperatures.txt", "utf8");
+  temp = fs.readFileSync("/home/pi/Documents/scripts/temperature/measures/temperature.txt", "utf8");
   res.json(temp);
 });
