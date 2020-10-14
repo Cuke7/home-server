@@ -32,7 +32,7 @@ app.use(express.static("public"));
   cert: fs.readFileSync('cert.pem')
 }, app).listen(8080);*/
 
-app.listen(8080, () => {
+app.listen(process.env.PORT, () => {
   console.log("Listening to requests on http://localhost:80");
 });
 
