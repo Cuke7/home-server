@@ -27,17 +27,16 @@ app.use(bodyParser.json());
 // Handle requests for static files
 app.use(express.static("public"));
 
-https
-  .createServer(
-    {
-      key: fs.readFileSync("key.pem"),
-      cert: fs.readFileSync("cert.pem"),
-    },
-    app
-  )
-  .listen(443);
+/*https.createServer({
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+}, app).listen(8080);*/
 
-console.log("Hello secure world!");
+app.listen(8080, () => {
+  console.log("Listening to requests on http://localhost:80");
+});
+
+console.log("Hello world!");
 
 //------------------------------------------------------------------------------------------
 //-------------------------------------QUOTIDIE CODE----------------------------------------
