@@ -27,16 +27,15 @@ app.use(bodyParser.json());
 // Handle requests for static files
 app.use(express.static("public"));
 
-/*https.createServer({
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem')
-}, app).listen(8080);*/
 
 app.listen(process.env.PORT, () => {
-  console.log("Listening to requests on http://localhost:80");
+  console.log("Listening to requests on" + process.env.PORT);
 });
 
-console.log("Hello world!");
+// for Facebook verification
+app.get("/uptimerobot", function (req, res) {
+  res.send("Hello Uptimerobot");
+});
 
 //------------------------------------------------------------------------------------------
 //-------------------------------------QUOTIDIE CODE----------------------------------------
