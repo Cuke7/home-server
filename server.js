@@ -199,7 +199,7 @@ function get_saint_promise() {
         saint.title = $(".css-1tmjk0q")["0"].children[0].data;
         saint.subtitle = $(".css-al50z9")["0"].children[0].data;
         saint.test = "Test";
-        saint.image_url = $(".css-tefugr")["0"].attribs.scr;
+        saint.image_url = $(".css-tefugr")["0"].attribs.src;
         resolve(saint);
       })
       .catch(function (err) {
