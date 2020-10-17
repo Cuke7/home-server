@@ -27,8 +27,7 @@ app.use(bodyParser.json());
 // Handle requests for static files
 app.use(express.static("public"));
 
-
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 8080, () => {
   console.log("Listening to requests on" + process.env.PORT);
 });
 
@@ -197,14 +196,9 @@ function get_saint_promise() {
       .then(function (body) {
         const $ = cheerio.load(body);
         let saint = {};
-        saint.title = $(".saint")["0"].children[0].data.trim();
-        if ($(".sant-info")["0"].children[0] != undefined) {
-          saint.subtitle = $(".sant-info")["0"].children[0].data;
-        } else {
-          saint.subtitle = "";
-        }
-        saint.image_url = $(".post-thumb-cont")["0"].children[0].attribs.src;
-        saint.url = url;
+        saint.title = $(".css-1tmjk0q")["0"].children[0].data;
+        saint.subtitle = $(".css-al50z9")["0"].children[0].data;
+        saint.image_url = $(".css-tefugr")["0"].attribs.scr;
         resolve(saint);
       })
       .catch(function (err) {
