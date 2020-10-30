@@ -126,7 +126,7 @@ function send_notifs(req, resp) {
 function return_evangile_API(req, resp) {
   // Allow CORS stuff
   resp.setHeader("Access-Control-Allow-Origin", "https://quotidie.netlify.app");
-  resp.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8080");
+  //resp.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8080");
   resp.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
@@ -168,7 +168,7 @@ function get_evangile_promise() {
 function return_saint_API(req, resp) {
   // Allow CORS stuff
   resp.setHeader("Access-Control-Allow-Origin", "https://quotidie.netlify.app");
-  resp.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8080");
+  //resp.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8080");
   resp.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
