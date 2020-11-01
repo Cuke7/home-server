@@ -656,7 +656,7 @@ app.get("/get_attestation", function (req, res) {
   var imagePath = path.join(process.cwd(), 'public/download');
   (async () => {
     const browser = await puppeteer.launch({
-      headless: false,
+      headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox"]
     });
     const page = await browser.newPage();
