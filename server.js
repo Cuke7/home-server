@@ -654,8 +654,7 @@ app.get("/get_rasp_temp/", function (req, res) {
 app.get("/get_attestation", function (req, res) {
   (async () => {
     const browser = await puppeteer.launch({
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      headless: false
+      args: ["--no-sandbox", "--disable-setuid-sandbox"]
     });
     const page = await browser.newPage();
 
