@@ -695,7 +695,7 @@ app.get("/get_attestation", function (req, res) {
 
     await browser.close();
   })();
-  return resp.json("Une attestation a été générée.");
+  //return resp.json("Une attestation a été générée.");
 });
 
 
