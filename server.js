@@ -645,3 +645,53 @@ app.get("/get_rasp_temp/", function (req, res) {
   );
   res.json(temp);
 });
+
+
+//------------------------------------------------------------------------------------------
+//----------------------------------ATTESTATION GENERATOR-----------------------------------
+//------------------------------------------------------------------------------------------
+
+app.get("/get_attestation", function (req, res) {
+  (async () => {
+    const browser = await puppeteer.launch({
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      headless: false
+    });
+    const page = await browser.newPage();
+
+    await page.goto('https://media.interieur.gouv.fr/deplacement-covid-19');
+
+    await page.type('#field-firstname', 'Louis');
+    await page.type('#field-lastname', 'Cassany');
+    await page.type('#field-birthday', '04/05/1995');
+    await page.type('#field-placeofbirth', 'Arès');
+    await page.type('#field-address', '3 route d\'Arcachon');
+    await page.type('#field-city', 'Hostens');
+    await page.type('#field-zipcode', '33125');
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = mm + '/' + dd + '/' + yyyy;
+    await page.type('#field-datesortie', today);
+
+    var d = new Date();
+    var now = d.toLocaleTimeString();
+    await page.type('#field-heuresortie', now);
+
+    await page.evaluate(() => {
+      document.querySelector("#checkbox-sport_animaux").click();
+    });
+
+    await page.evaluate(() => {
+      document.querySelector("#generate-btn").click();
+    });
+
+    await page.waitForNavigation();
+
+    await browser.close();
+  })();
+});
+
+
