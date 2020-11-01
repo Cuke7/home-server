@@ -28,6 +28,7 @@
     "puppeteer": "^5.3.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
+    "request-promise-native": "^1.0.9",
     "rss-parser": "^3.9.0",
     "web-push": "^3.4.4"
   }

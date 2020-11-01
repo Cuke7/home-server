@@ -653,9 +653,10 @@ app.get("/get_rasp_temp/", function (req, res) {
 
 app.get("/get_attestation", function (req, res) {
   var path = require("path");
-  var imagePath = path.join(process.cwd(), 'public/insta.png');
+  var imagePath = path.join(process.cwd(), 'public/download');
   (async () => {
     const browser = await puppeteer.launch({
+      headless: false,
       args: ["--no-sandbox", "--disable-setuid-sandbox"]
     });
     const page = await browser.newPage();
@@ -685,17 +686,15 @@ app.get("/get_attestation", function (req, res) {
       document.querySelector("#checkbox-sport_animaux").click();
     });
 
+    await page._client.send('Page.setDownloadBehavior', {behavior: 'allow', downloadPath: imagePath});
+
     await page.evaluate(() => {
       document.querySelector("#generate-btn").click();
     });
 
-    await page.waitForNavigation();
+    //await page._client.send('Page.setDownloadBehavior', {behavior: 'allow', downloadPath: './download'});
 
-    await page.screenshot({ path: imagePath });
-
-    await browser.close();
   })();
-  //return resp.json("Une attestation a été générée.");
 });
 
 
