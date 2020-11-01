@@ -686,13 +686,35 @@ app.get("/get_attestation", function (req, res) {
       document.querySelector("#checkbox-sport_animaux").click();
     });
 
-    await page._client.send('Page.setDownloadBehavior', {behavior: 'allow', downloadPath: imagePath});
+    await page._client.send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: imagePath });
 
     await page.evaluate(() => {
       document.querySelector("#generate-btn").click();
     });
 
-    //await page._client.send('Page.setDownloadBehavior', {behavior: 'allow', downloadPath: './download'});
+    let paused = false;
+    let pausedRequests = [];
+
+    const nextRequest = () => { // continue the next request or "unpause"
+      if (pausedRequests.length === 0) {
+        paused = false;
+      } else {
+        // continue first request in "queue"
+        (pausedRequests.shift())(); // calls the request.continue function
+      }
+    };
+
+    fs.readdir(imagePath, function (err, files) {
+      //handling error
+      if (err) {
+        return console.log('Unable to scan directory: ' + err);
+      }
+
+      files.forEach(file => {
+        console.log(file);
+      });
+      res.send("Done !")
+    });
 
   })();
 });
