@@ -24,6 +24,7 @@
     "firebase": "^7.23.0",
     "fs": "0.0.1-security",
     "https": "^1.0.0",
+    "path": "^0.12.7",
     "puppeteer": "^5.3.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",

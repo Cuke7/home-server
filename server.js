@@ -652,6 +652,8 @@ app.get("/get_rasp_temp/", function (req, res) {
 //------------------------------------------------------------------------------------------
 
 app.get("/get_attestation", function (req, res) {
+  var path = require("path");
+  var imagePath = path.join(process.cwd(), 'public/insta.png');
   (async () => {
     const browser = await puppeteer.launch({
       args: ["--no-sandbox", "--disable-setuid-sandbox"]
@@ -669,7 +671,7 @@ app.get("/get_attestation", function (req, res) {
     await page.type('#field-zipcode', '33125');
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
     var yyyy = today.getFullYear();
 
     today = mm + '/' + dd + '/' + yyyy;
@@ -689,8 +691,11 @@ app.get("/get_attestation", function (req, res) {
 
     await page.waitForNavigation();
 
+    await page.screenshot({ path: imagePath });
+
     await browser.close();
   })();
+  return resp.json("Une attestation a été générée.");
 });
 
 
