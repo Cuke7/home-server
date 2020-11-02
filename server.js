@@ -689,7 +689,7 @@ app.get("/get_attestation", function (req, res) {
     });
 
     //await page.waitForFunction('document.getElementById("wait").value != "No Value"');
-    await page.waitForSelector('[href*="blob:https://"]');
+    await page.waitForSelector("[href*=\"blob:https://\"]");
 
     //await page.waitForFunction('document.body.lastElementChild.href.includes("https://")');
 
