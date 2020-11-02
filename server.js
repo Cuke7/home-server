@@ -681,7 +681,7 @@ app.get("/get_attestation", function (req, res) {
 
     var d = new Date();
     var now = d.toLocaleTimeString();
-    await page.type('#field-heuresortie', now);
+    await page.type('#field-heuresortie', now.slice(0, -3));
 
     await page.evaluate(() => {
       document.querySelector("#checkbox-sport_animaux").click();
@@ -693,22 +693,37 @@ app.get("/get_attestation", function (req, res) {
       document.querySelector("#generate-btn").click();
     });
 
-    await page.screenshot({
-      fullPage: true,
-      path: "test.png"
+    //await page.waitForFunction('document.getElementById("wait").value != "No Value"');
+    await page.waitForSelector('[href*="blob:https://"]')
+
+    await page.waitForFunction('document.body.lastElementChild.href.includes("https://")');
+
+    let url = await page.evaluate(() => {
+      let toto = document.body.lastElementChild.href;
+      return toto;
     });
 
-    fs.readdir(imagePath, function (err, files) {
-      //handling error
-      if (err) {
-        return console.log('Unable to scan directory: ' + err);
-      }
+    //await page.goto(url);
 
-      files.forEach(file => {
-        console.log(file);
-      });
-      res.send("Done !")
-    });
+    async function getPdf() {
+      return page.evaluate(url => {
+        return new Promise(async resolve => {
+          const reader = new FileReader();
+          const response = await window.fetch(url)
+          const data = await response.blob();
+          debugger;
+          reader.readAsBinaryString(data);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = () => reject('Error occurred while reading binary string');
+        });
+      }, url);
+    }
+    const pdfString = await getPdf();
+    const pdfData = Buffer.from(pdfString, 'binary');
+    console.log(pdfData)
+    res.setHeader('Content-Type', 'application/pdf');
+    res.send(pdfData)
+    console.log(now)
 
   })();
 });
