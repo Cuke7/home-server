@@ -692,17 +692,10 @@ app.get("/get_attestation", function (req, res) {
       document.querySelector("#generate-btn").click();
     });
 
-    let paused = false;
-    let pausedRequests = [];
-
-    const nextRequest = () => { // continue the next request or "unpause"
-      if (pausedRequests.length === 0) {
-        paused = false;
-      } else {
-        // continue first request in "queue"
-        (pausedRequests.shift())(); // calls the request.continue function
-      }
-    };
+    await page.screenshot({
+      fullPage: true,
+      path: "test.png"
+    });
 
     fs.readdir(imagePath, function (err, files) {
       //handling error
