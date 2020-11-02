@@ -693,9 +693,11 @@ app.get("/get_attestation", function (req, res) {
     });
 
     //await page.waitForFunction('document.getElementById("wait").value != "No Value"');
-    await page.waitForSelector('[href*="blob:https://"]')
+    await page.waitForSelector('[href*="blob:https://"]', {
+      timeout: 300000
+    })
 
-    await page.waitForFunction('document.body.lastElementChild.href.includes("https://")');
+    //await page.waitForFunction('document.body.lastElementChild.href.includes("https://")');
 
     let url = await page.evaluate(() => {
       let toto = document.body.lastElementChild.href;
@@ -723,6 +725,8 @@ app.get("/get_attestation", function (req, res) {
     res.setHeader('Content-Type', 'application/pdf');
     res.send(pdfData)
     console.log(now)
+
+    browser.close();
 
   })();
 });
