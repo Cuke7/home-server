@@ -688,8 +688,14 @@ app.get("/get_attestation", function (req, res) {
       document.querySelector("#generate-btn").click();
     });
 
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    await sleep(2000);
+
     //await page.waitForFunction('document.getElementById("wait").value != "No Value"');
-    await page.waitForSelector("[href*=\"blob:https://\"]");
+    //await page.waitForSelector("[href*=\"blob:https://\"]");
 
     //await page.waitForFunction('document.body.lastElementChild.href.includes("https://")');
 
