@@ -22,14 +22,9 @@
     "cheerio": "^1.0.0-rc.3",
     "express": "^4.17.1",
     "firebase": "^7.23.0",
-    "fs": "0.0.1-security",
-    "heroku": "^7.47.0",
-    "https": "^1.0.0",
-    "path": "^0.12.7",
     "puppeteer": "^5.3.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
-    "request-promise-native": "^1.0.9",
     "rss-parser": "^3.9.0",
     "web-push": "^3.4.4"
   }

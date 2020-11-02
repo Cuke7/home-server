@@ -13,7 +13,7 @@ const webpush = require("web-push");
 const rp = require("request-promise");
 const cheerio = require("cheerio");
 const request = require("request");
-const fs = require("fs");
+//const fs = require("fs");
 const https = require("https");
 
 // No idea what it does
@@ -652,8 +652,6 @@ app.get("/get_rasp_temp/", function (req, res) {
 //------------------------------------------------------------------------------------------
 
 app.get("/get_attestation", function (req, res) {
-  var path = require("path");
-  var imagePath = path.join(process.cwd(), 'public/download');
   (async () => {
     const browser = await puppeteer.launch({
       headless: true,
@@ -686,16 +684,12 @@ app.get("/get_attestation", function (req, res) {
       document.querySelector("#checkbox-sport_animaux").click();
     });
 
-    await page._client.send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: imagePath });
-
     await page.evaluate(() => {
       document.querySelector("#generate-btn").click();
     });
 
     //await page.waitForFunction('document.getElementById("wait").value != "No Value"');
-    await page.waitForSelector('[href*="blob:https://"]', {
-      timeout: 300000
-    })
+    await page.waitForSelector('[href*="blob:https://"]');
 
     //await page.waitForFunction('document.body.lastElementChild.href.includes("https://")');
 
