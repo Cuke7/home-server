@@ -692,7 +692,7 @@ app.get("/get_attestation", function (req, res) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    await sleep(2000);
+    await sleep(10000);
 
     //await page.waitForFunction('document.getElementById("wait").value != "No Value"');
     //await page.waitForSelector("[href*=\"blob:https://\"]");
