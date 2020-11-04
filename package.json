@@ -22,6 +22,7 @@
     "cheerio": "^1.0.0-rc.3",
     "express": "^4.17.1",
     "firebase": "^7.23.0",
+    "fs": "0.0.1-security",
     "puppeteer": "^5.3.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
