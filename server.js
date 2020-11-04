@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 // Handle requests for static files
 app.use(express.static("public"));
 
-app.listen(process.env.PORT || 8080, () => {
+app.listen(process.env.PORT || 80, () => {
   console.log("Listening to requests on" + process.env.PORT);
 });
 
@@ -655,8 +655,9 @@ app.get("/get_rasp_temp/", function (req, res) {
 app.get("/get_attestation", function (req, res) {
   (async () => {
     const browser = await puppeteer.launch({
-      headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"]
+	headless: true,
+	executablePath: 'chromium-browser',
+	args: ["--no-sandbox", "--disable-setuid-sandbox"]
     });
     const page = await browser.newPage();
 
@@ -677,9 +678,9 @@ app.get("/get_attestation", function (req, res) {
     today = mm + '/' + dd + '/' + yyyy;
     await page.type('#field-datesortie', today);
 
-    var d = new Date();
-    var now = d.toLocaleTimeString();
-    await page.type('#field-heuresortie', now.slice(0, -3));
+    var now = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}).slice(0,-3);
+ 
+    await page.$eval('#field-heuresortie', el => el.value = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}).slice(0,-3));
 
     await page.evaluate(() => {
       document.querySelector("#checkbox-sport_animaux").click();
@@ -721,7 +722,7 @@ app.get("/get_attestation", function (req, res) {
     console.log(now);
     send_attestation();
 
-    browser.close();
+    //browser.close();
 
   })();
 });
