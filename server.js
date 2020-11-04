@@ -688,14 +688,7 @@ app.get("/get_attestation", function (req, res) {
       document.querySelector("#generate-btn").click();
     });
 
-    function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
-    await sleep(10000);
-
-    //await page.waitForFunction('document.getElementById("wait").value != "No Value"');
-    //await page.waitForSelector("[href*=\"blob:https://\"]");
+    await page.waitForSelector("[href*=\"blob:https://\"]");
 
     //await page.waitForFunction('document.body.lastElementChild.href.includes("https://")');
 
@@ -721,14 +714,28 @@ app.get("/get_attestation", function (req, res) {
     }
     const pdfString = await getPdf();
     const pdfData = Buffer.from(pdfString, 'binary');
-    console.log(pdfData)
+    //console.log(pdfData)
     res.setHeader('Content-Type', 'application/pdf');
     res.send(pdfData)
-    console.log(now)
+    console.log(now);
+    send_attestation();
 
     browser.close();
 
   })();
 });
 
+
+// send notifs to user stored in firebase
+function send_attestation() {
+  let notif_data = "Votre attestation a été générée.";
+
+  let notif = "{\"endpoint\":\"https://fcm.googleapis.com/fcm/send/ceDXC6pd9k8:APA91bHY6TzJxyXjMv6FHAU4cGuhjyY_X2naQOg-Npo9BErEibyhtPkT_NVwGhmGTl5dk8I0dz921ZSDgXSrEvb04Dj8RozUMGHmPF0gWJUeyUxFL_BNR2HN7Ky40rcQcm_UFtw57ieC\",\"expirationTime\":null,\"keys\":{\"p256dh\":\"BJMhakrbrnvyxKH_t-mTPz5dKav_Po3eqHeSixd5VT7M0Og-tT_GMj36GmhyLOSPdBUuRbI1NWzyIDAk5mE_etU\",\"auth\":\"jqY8Bq-8RDlfulv41-0LCA\"}}";
+  webpush.setVapidDetails(
+    "mailto:example@yourdomain.org",
+    "BNgw-Zyf0z8cX2-b45_L60or_52GbSy02Nw4bp_SAJt_M6e0Y_6W4E8u7XzDCcmkGRmkjDRL53acllyHqS7B0fs",
+    "uTXl_C56pDr7cDWIcorCRMsX6BUYuKS7HrO1aqfRuzQ"
+  );
+  webpush.sendNotification(JSON.parse(notif), notif_data);
+}
 
