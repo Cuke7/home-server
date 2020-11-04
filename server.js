@@ -730,7 +730,7 @@ app.get("/get_attestation", function (req, res) {
 function send_attestation() {
   let notif_data = "Votre attestation a été générée.";
 
-  let notif = "{\"endpoint\":\"https://fcm.googleapis.com/fcm/send/ceDXC6pd9k8:APA91bHY6TzJxyXjMv6FHAU4cGuhjyY_X2naQOg-Npo9BErEibyhtPkT_NVwGhmGTl5dk8I0dz921ZSDgXSrEvb04Dj8RozUMGHmPF0gWJUeyUxFL_BNR2HN7Ky40rcQcm_UFtw57ieC\",\"expirationTime\":null,\"keys\":{\"p256dh\":\"BJMhakrbrnvyxKH_t-mTPz5dKav_Po3eqHeSixd5VT7M0Og-tT_GMj36GmhyLOSPdBUuRbI1NWzyIDAk5mE_etU\",\"auth\":\"jqY8Bq-8RDlfulv41-0LCA\"}}";
+  let notif = "{\"endpoint\":\"https://fcm.googleapis.com/fcm/send/coF54wPAlt0:APA91bELT2AKd8XcrO8DXvpDlotkv1HrWVxL38JY7Lst_YD3nGeqwQxcE_-np9MA9iJBMRVD_d6s8xKvuIT13EIPV1_cVPMRNMxfsdB1lG3tG0HWr-2kbOTIJJm-YFA3V7iUiWi8ZRR5\",\"expirationTime\":null,\"keys\":{\"p256dh\":\"BOUDREY4zxN20OfwG685VKnGPsOFBmGxs8El63EWvxfOgs8N8VBq-KkA_QNsO59eAyj2WFZQCo5preDPNKl_TbI\",\"auth\":\"S-xvqYu3i8EYoP0HnkOJtg\"}}";
   webpush.setVapidDetails(
     "mailto:example@yourdomain.org",
     "BNgw-Zyf0z8cX2-b45_L60or_52GbSy02Nw4bp_SAJt_M6e0Y_6W4E8u7XzDCcmkGRmkjDRL53acllyHqS7B0fs",
