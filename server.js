@@ -15,6 +15,7 @@ const cheerio = require("cheerio");
 const request = require("request");
 //const fs = require("fs");
 const https = require("https");
+const fs = require("fs");
 
 // No idea what it does
 app.use(
