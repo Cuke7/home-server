@@ -647,12 +647,13 @@ app.get("/get_rasp_temp/", function (req, res) {
   res.json(temp);
 });
 
+let pdf = null;
 
 //------------------------------------------------------------------------------------------
 //----------------------------------ATTESTATION GENERATOR-----------------------------------
 //------------------------------------------------------------------------------------------
 
-app.get("/get_attestation", function (req, res) {
+app.get("/generate_attestation", function (req, res) {
   (async () => {
     const browser = await puppeteer.launch({
 	headless: true,
@@ -718,11 +719,12 @@ app.get("/get_attestation", function (req, res) {
     const pdfData = Buffer.from(pdfString, 'binary');
     //console.log(pdfData)
     res.setHeader('Content-Type', 'application/pdf');
+    pdf = pdfData;
     res.send(pdfData)
     console.log(now);
     send_attestation();
 
-    //browser.close();
+    browser.close();
 
   })();
 });
@@ -741,3 +743,7 @@ function send_attestation() {
   webpush.sendNotification(JSON.parse(notif), notif_data);
 }
 
+app.get("/get_attestation", function (req, res) {
+    res.setHeader('Content-Type', 'application/pdf');
+    res.send(pdf)
+})
