@@ -683,9 +683,19 @@ app.get("/generate_attestation", function (req, res) {
 
     await page.$eval('#field-heuresortie', el => el.value = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).slice(0, -3));
 
-    await page.evaluate(() => {
-      document.querySelector("#checkbox-sport_animaux").click();
-    });
+    var reason = req.query.reason;
+    if(reason.includes("course")){
+      await page.evaluate(() => {
+       document.querySelector("#checkbox-achats").click();
+      });
+      console.log("C'est pour aller faire des courses");
+    }else{
+      await page.evaluate(() => {
+        document.querySelector("#checkbox-sport_animaux").click();
+      });
+      console.log("C'est pour aller faire du sport");
+    }
+    
 
     await page.evaluate(() => {
       document.querySelector("#generate-btn").click();
@@ -744,7 +754,7 @@ function send_attestation() {
 }
 
 app.get("/get_attestation", function (req, res) {
-
+ 
   async function signPDF(pdfBuffer, imgBuffer) {
     const pdfDoc = await PDFDocument.load(pdfBuffer);
     const pngImage = await pdfDoc.embedPng(imgBuffer);
@@ -759,8 +769,12 @@ app.get("/get_attestation", function (req, res) {
     })
     const pdfBytes = await pdfDoc.save();
     const buffer = Buffer.from(pdfBytes);
-    console.log(buffer)
+    //console.log(buffer)
     res.setHeader('Content-Type', 'application/pdf');
+    var now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const regex = /:/gi;
+    now = now.replace(regex, "_");
+    res.setHeader("Content-Disposition","attachment; filename=attestation_" + now + ".pdf");
     res.send(buffer)
   }
 
