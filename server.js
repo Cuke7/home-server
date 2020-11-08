@@ -13,7 +13,6 @@ const webpush = require("web-push");
 const rp = require("request-promise");
 const cheerio = require("cheerio");
 const request = require("request");
-//const fs = require("fs");
 const https = require("https");
 const fs = require("fs");
 
@@ -745,5 +744,5 @@ function send_attestation() {
 
 app.get("/get_attestation", function (req, res) {
     res.setHeader('Content-Type', 'application/pdf');
-    res.send(pdf)
+    res.download(pdf)
 })
