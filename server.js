@@ -15,6 +15,7 @@ const cheerio = require("cheerio");
 const request = require("request");
 const https = require("https");
 const fs = require("fs");
+const { PDFDocument } = require('pdf-lib');
 
 // No idea what it does
 app.use(
@@ -655,9 +656,9 @@ let pdf = null;
 app.get("/generate_attestation", function (req, res) {
   (async () => {
     const browser = await puppeteer.launch({
-	headless: true,
-	executablePath: 'chromium-browser',
-	args: ["--no-sandbox", "--disable-setuid-sandbox"]
+      headless: true,
+      executablePath: 'chromium-browser',
+      args: ["--no-sandbox", "--disable-setuid-sandbox"]
     });
     const page = await browser.newPage();
 
@@ -678,9 +679,9 @@ app.get("/generate_attestation", function (req, res) {
     today = mm + '/' + dd + '/' + yyyy;
     await page.type('#field-datesortie', today);
 
-    var now = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}).slice(0,-3);
- 
-    await page.$eval('#field-heuresortie', el => el.value = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}).slice(0,-3));
+    var now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).slice(0, -3);
+
+    await page.$eval('#field-heuresortie', el => el.value = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).slice(0, -3));
 
     await page.evaluate(() => {
       document.querySelector("#checkbox-sport_animaux").click();
@@ -743,6 +744,28 @@ function send_attestation() {
 }
 
 app.get("/get_attestation", function (req, res) {
+
+  async function signPDF(pdfBuffer, imgBuffer) {
+    const pdfDoc = await PDFDocument.load(pdfBuffer);
+    const pngImage = await pdfDoc.embedPng(imgBuffer);
+    const pngDims = pngImage.scale(0.07)
+    const pages = pdfDoc.getPages()
+    const firstPage = pages[0]
+    firstPage.drawImage(pngImage, {
+      x: 150,
+      y: 100,
+      width: pngDims.width,
+      height: pngDims.height,
+    })
+    const pdfBytes = await pdfDoc.save();
+    const buffer = Buffer.from(pdfBytes);
+    console.log(buffer)
     res.setHeader('Content-Type', 'application/pdf');
-    res.download(pdf)
+    res.send(buffer)
+  }
+
+  fs.readFile("signature.png", (err2, imgBuffer) => {
+    signPDF(pdf, imgBuffer);
+  })
+
 })
