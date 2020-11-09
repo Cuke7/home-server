@@ -668,9 +668,9 @@ app.get("/generate_attestation", function (req, res) {
     await page.type('#field-lastname', 'Cassany');
     await page.type('#field-birthday', '04/05/1995');
     await page.type('#field-placeofbirth', 'Arès');
-    await page.type('#field-address', '3 route d\'Arcachon');
-    await page.type('#field-city', 'Hostens');
-    await page.type('#field-zipcode', '33125');
+    await page.type('#field-address', '19 rue Roustaing');
+    await page.type('#field-city', 'Talence');
+    await page.type('#field-zipcode', '33400');
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0');
