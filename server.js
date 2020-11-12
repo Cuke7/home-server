@@ -17,6 +17,8 @@ const https = require("https");
 const fs = require("fs");
 const { PDFDocument } = require('pdf-lib');
 
+const allowedOrigins = ["http://127.0.0.1:8000", "https://quotidie.netlify.app"];
+
 // No idea what it does
 app.use(
   bodyParser.urlencoded({
@@ -126,8 +128,10 @@ function send_notifs(req, resp) {
 
 function return_evangile_API(req, resp) {
   // Allow CORS stuff
-  resp.setHeader("Access-Control-Allow-Origin", "https://quotidie.netlify.app");
-  //resp.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8080");
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    resp.setHeader('Access-Control-Allow-Origin', origin);
+  }
   resp.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
@@ -168,8 +172,10 @@ function get_evangile_promise() {
 
 function return_saint_API(req, resp) {
   // Allow CORS stuff
-  resp.setHeader("Access-Control-Allow-Origin", "https://quotidie.netlify.app");
-  //resp.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8080");
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    resp.setHeader('Access-Control-Allow-Origin', origin);
+  }
   resp.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
