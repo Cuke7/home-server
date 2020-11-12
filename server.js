@@ -668,9 +668,9 @@ app.get("/generate_attestation", function (req, res) {
     await page.type('#field-lastname', 'Cassany');
     await page.type('#field-birthday', '04/05/1995');
     await page.type('#field-placeofbirth', 'Arès');
-    await page.type('#field-address', '19 rue Roustaing');
-    await page.type('#field-city', 'Talence');
-    await page.type('#field-zipcode', '33400');
+    await page.type('#field-address', "3 route d'Acrachon");
+    await page.type('#field-city', 'Hostens');
+    await page.type('#field-zipcode', '33125');
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -680,6 +680,12 @@ app.get("/generate_attestation", function (req, res) {
     await page.type('#field-datesortie', today);
 
     var now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).slice(0, -3);
+    var notation = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).slice(-2);
+    
+    if(notation === "PM"){
+      now=Number(now.slice(0,2))+12+""+now.slice(-3)
+    }
+	
 
     await page.$eval('#field-heuresortie', el => el.value = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).slice(0, -3));
 
