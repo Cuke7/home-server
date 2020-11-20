@@ -479,8 +479,8 @@ function get_times_for_FB(station, sender_psid) {
 
 // Weather API for Talence city
 app.get("/weather", function (req, res) {
-  let lat = "44.805160";
-  let long = "-0.589541";
+  let lat = "44.492906";
+  let long = "-0.639854";
   let API_key = "5079817a0f73cd7ba5f93db4dab118c9";
   let url =
     "https://api.openweathermap.org/data/2.5/onecall?lat=" +
@@ -687,27 +687,27 @@ app.get("/generate_attestation", function (req, res) {
 
     var now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).slice(0, -3);
     var notation = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).slice(-2);
-    
-    if(notation === "PM"){
-      now=Number(now.slice(0,2))+12+""+now.slice(-3)
+
+    if (notation === "PM") {
+      now = Number(now.slice(0, 2)) + 12 + "" + now.slice(-3)
     }
-	
+
 
     await page.$eval('#field-heuresortie', el => el.value = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).slice(0, -3));
 
     var reason = req.query.reason;
-    if(reason.includes("course")){
+    if (reason.includes("course")) {
       await page.evaluate(() => {
-       document.querySelector("#checkbox-achats").click();
+        document.querySelector("#checkbox-achats").click();
       });
       console.log("C'est pour aller faire des courses");
-    }else{
+    } else {
       await page.evaluate(() => {
         document.querySelector("#checkbox-sport_animaux").click();
       });
       console.log("C'est pour aller faire du sport");
     }
-    
+
 
     await page.evaluate(() => {
       document.querySelector("#generate-btn").click();
@@ -766,7 +766,7 @@ function send_attestation() {
 }
 
 app.get("/get_attestation", function (req, res) {
- 
+
   async function signPDF(pdfBuffer, imgBuffer) {
     const pdfDoc = await PDFDocument.load(pdfBuffer);
     const pngImage = await pdfDoc.embedPng(imgBuffer);
@@ -786,7 +786,7 @@ app.get("/get_attestation", function (req, res) {
     var now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     const regex = /:/gi;
     now = now.replace(regex, "_");
-    res.setHeader("Content-Disposition","attachment; filename=attestation_" + now + ".pdf");
+    res.setHeader("Content-Disposition", "attachment; filename=attestation_" + now + ".pdf");
     res.send(buffer)
   }
 
