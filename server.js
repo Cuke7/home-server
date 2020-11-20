@@ -774,8 +774,8 @@ app.get("/get_attestation", function (req, res) {
     const pages = pdfDoc.getPages()
     const firstPage = pages[0]
     firstPage.drawImage(pngImage, {
-      x: 150,
-      y: 100,
+      x: 200,
+      y: 20,
       width: pngDims.width,
       height: pngDims.height,
     })
